@@ -222,9 +222,28 @@ export type NewsletterSignupSection = BaseSection & {
   cta: CtaEntry | null;
 };
 
+export type FooterSection = BaseSection & {
+  type: "footer";
+  frontEndComponent: string | null;
+  logo: ImageEntry | null;
+  socialLinks: SocialLinkEntry[];
+  phone: string | null;
+  phoneHref: string | null;
+  email: string | null;
+  emailHref: string | null;
+  address: RichTextContent;
+  charityInfo: StatEntry[];
+  legalLinks: NavLink[];
+  copyright: string | null;
+  credit: RichTextContent;
+  partnerLogos: CardEntry[];
+  badge: CardEntry | null;
+};
+
 export type Section =
   | UnknownSection
   | NavigationSection
+  | FooterSection
   | HeroSliderSection
   | MissionStatementSection
   | CountryCardsSection
