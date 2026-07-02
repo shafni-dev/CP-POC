@@ -9,7 +9,13 @@ export type RawCta = {
   target?: string | null;
 } | null;
 
-const VARIANTS: CtaVariant[] = ["default", "primary", "donate"];
+const VARIANTS: CtaVariant[] = [
+  "default",
+  "primary",
+  "donate",
+  "ghost-accent",
+  "ghost",
+];
 
 export function mapCta(raw: RawCta): CtaEntry | null {
   if (!raw) return null;

@@ -22,7 +22,12 @@ export type ImageEntry = {
   loading: "eager" | "lazy";
 };
 
-export type CtaVariant = "default" | "primary" | "donate";
+export type CtaVariant =
+  | "default"
+  | "primary"
+  | "donate"
+  | "ghost-accent"
+  | "ghost";
 
 export type CtaEntry = {
   id: string;
@@ -116,4 +121,116 @@ export type NavigationSection = BaseSection & {
   socialLinks: SocialLinkEntry[];
 };
 
-export type Section = UnknownSection | NavigationSection;
+export type StatEntry = {
+  id: string;
+  value: string;
+  label: string;
+};
+
+export type HeroSliderSection = BaseSection & {
+  type: "heroSlider";
+  frontEndComponent: string | null;
+  sectionId: string | null;
+  slides: CardEntry[];
+};
+
+export type MissionStatementSection = BaseSection & {
+  type: "missionStatement";
+  frontEndComponent: string | null;
+  eyebrow: string | null;
+  heading: string;
+  body: RichTextContent;
+  stats: StatEntry[];
+};
+
+export type CountryCardsSection = BaseSection & {
+  type: "countryCards";
+  frontEndComponent: string | null;
+  sectionId: string | null;
+  cards: CardEntry[];
+};
+
+export type ImpactStatsSection = BaseSection & {
+  type: "impactStats";
+  frontEndComponent: string | null;
+  sectionId: string | null;
+  heading: string;
+  image: ImageEntry | null;
+  stats: StatEntry[];
+  cta: CtaEntry | null;
+};
+
+export type ExploreSliderSection = BaseSection & {
+  type: "exploreSlider";
+  frontEndComponent: string | null;
+  sectionId: string | null;
+  eyebrow: string | null;
+  heading: string;
+  cards: CardEntry[];
+};
+
+export type DonationCtaSection = BaseSection & {
+  type: "donationCta";
+  frontEndComponent: string | null;
+  sectionId: string | null;
+  heading: string;
+  subheading: string | null;
+  body: RichTextContent;
+  cta: CtaEntry | null;
+  photoCredit: string | null;
+  image: ImageAsset & { title?: string | null; alt?: string | null };
+};
+
+export type LegendColor = "orange" | "purple" | "grey";
+
+export type LegendItemEntry = {
+  id: string;
+  label: string;
+  percentage: string;
+  color: LegendColor;
+};
+
+export type SpendingAndVideoSection = BaseSection & {
+  type: "spendingAndVideo";
+  frontEndComponent: string | null;
+  sectionId: string | null;
+  heading: string;
+  body: RichTextContent;
+  chart: (ImageAsset & { alt: string | null }) | null;
+  legend: LegendItemEntry[];
+  video: VideoEntry | null;
+};
+
+export type LatestNewsSection = BaseSection & {
+  type: "latestNews";
+  frontEndComponent: string | null;
+  eyebrow: string | null;
+  heading: string | null;
+  sectionId: string | null;
+  cards: CardEntry[];
+};
+
+export type NewsletterSignupSection = BaseSection & {
+  type: "newsletterSignup";
+  frontEndComponent: string | null;
+  sectionId: string | null;
+  heading: string;
+  body: RichTextContent;
+  modalBody: RichTextContent;
+  brevoFormAction: string | null;
+  brevoRecaptchaSiteKey: string | null;
+  cta: CtaEntry | null;
+};
+
+export type Section =
+  | UnknownSection
+  | NavigationSection
+  | HeroSliderSection
+  | MissionStatementSection
+  | CountryCardsSection
+  | ExploreSliderSection
+  | DonationCtaSection
+  | SpendingAndVideoSection
+  | LatestNewsSection
+  | NewsletterSignupSection
+  | ImpactStatsSection;

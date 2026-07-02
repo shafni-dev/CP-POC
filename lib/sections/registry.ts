@@ -1,5 +1,14 @@
 import type { SectionDefinition } from "./config";
 import { navigationDefinition } from "./definitions/navigation";
+import { heroSliderDefinition } from "./definitions/heroSlider";
+import { missionStatementDefinition } from "./definitions/missionStatement";
+import { countryCardsDefinition } from "./definitions/countryCards";
+import { exploreSliderDefinition } from "./definitions/exploreSlider";
+import { donationCtaDefinition } from "./definitions/donationCta";
+import { spendingAndVideoDefinition } from "./definitions/spendingAndVideo";
+import { newsletterSignupDefinition } from "./definitions/newsletterSignup";
+import { latestNewsDefinition } from "./definitions/latestNews";
+import { impactStatsDefinition } from "./definitions/impactStats";
 
 /**
  * Central section registry. Empty by default.
@@ -12,4 +21,15 @@ import { navigationDefinition } from "./definitions/navigation";
  * See `components/ARCHITECTURE.md` for the full walkthrough and the
  * switch-case mental model used inside variant routers.
  */
-export const sectionRegistry: SectionDefinition[] = [navigationDefinition];
+export const sectionRegistry: SectionDefinition[] = [
+  navigationDefinition,
+  heroSliderDefinition,
+  missionStatementDefinition,
+  countryCardsDefinition,
+  exploreSliderDefinition,
+  donationCtaDefinition,
+  spendingAndVideoDefinition,
+  newsletterSignupDefinition,
+  latestNewsDefinition,
+  impactStatsDefinition,
+];

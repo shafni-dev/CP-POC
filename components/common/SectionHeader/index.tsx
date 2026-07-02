@@ -33,14 +33,18 @@ export function SectionHeader({
         </p>
       )}
       <h2
-        className={`mt-2 text-[33px] font-semibold uppercase leading-[1.05] text-[var(--brand-primary)] font-[family-name:var(--font-poppins)] ${
+        className={`mt-1 text-[38px] font-bold uppercase leading-[1.15] text-[var(--text-default)] font-[family-name:var(--font-poppins)] ${
           divider ? "border-b-2 border-[var(--brand-accent)] pb-2" : ""
         }`}
       >
         {heading}
       </h2>
       {intro && (
-        <div className="mt-4 max-w-[70ch] text-[16px] leading-relaxed text-[var(--text-default)]">
+        <div
+          className={`mt-[10px] text-[16.5px] leading-[1.5] text-[var(--text-default)] font-[family-name:var(--font-poppins)] ${
+            align === "center" ? "max-w-[70ch]" : ""
+          }`}
+        >
           {intro}
         </div>
       )}

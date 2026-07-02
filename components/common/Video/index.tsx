@@ -6,8 +6,9 @@ type VideoProps = {
 };
 
 /**
- * YouTube (privacy-enhanced, nocookie) embed in a 16:9 responsive frame with a
- * rounded border and an optional caption.
+ * YouTube (privacy-enhanced, nocookie) embed in a 16:9 responsive frame with
+ * subtly rounded corners and an optional caption. Mirrors the source site's
+ * `.videoborderrounded` treatment (rounded, no visible border).
  */
 export function Video({ video, className = "" }: VideoProps) {
   if (!video?.youtubeId) return null;
@@ -15,7 +16,7 @@ export function Video({ video, className = "" }: VideoProps) {
 
   return (
     <figure className={className}>
-      <div className="relative aspect-video overflow-hidden rounded-2xl border-2 border-[var(--brand-primary)]">
+      <div className="relative aspect-video overflow-hidden rounded-lg">
         <iframe
           className="absolute inset-0 h-full w-full border-0"
           src={`https://www.youtube-nocookie.com/embed/${video.youtubeId}`}
@@ -25,7 +26,7 @@ export function Video({ video, className = "" }: VideoProps) {
         />
       </div>
       {video.caption && (
-        <figcaption className="mt-3 text-[15px] text-[var(--text-muted)]">
+        <figcaption className="mt-[40px] text-[16.5px] leading-[1.5] text-[var(--text-default)] font-[family-name:var(--font-poppins)]">
           {video.caption}
         </figcaption>
       )}

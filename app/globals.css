@@ -13,7 +13,14 @@
   --brand-accent: #f7941d;
   --text-default: #333333;
   --text-muted: #6a6a6a;
-  --bg-muted: #f5f5f5;
+  --text-meta: #999999;
+  --bg-muted: #f8f6f6;
+  --border-divider: rgba(0, 0, 0, 0.1);
+
+  /* Pie-chart legend swatches (match /images/pie-chart24.svg) */
+  --chart-orange: #f7941d;
+  --chart-purple: #92278f;
+  --chart-grey: #939598;
 
   /* Navigation */
   --nav-link: #333333;

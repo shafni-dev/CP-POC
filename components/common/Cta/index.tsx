@@ -25,23 +25,55 @@ const VARIANT: Record<CtaVariant, string> = {
   // branded pill Donate with heart
   donate:
     "px-5 font-bold uppercase tracking-[1.5px] rounded-full border-2 border-transparent bg-[var(--brand-primary)] text-white hover:bg-[var(--brand-primary-hover)]",
+  // orange-outline pill, white uppercase text — ghost CTA on the purple hero card.
+  // Hover: border + text swap to white border / accent text, fill stays transparent.
+  "ghost-accent":
+    "px-[30px] rounded-full font-bold uppercase tracking-[1.5px] border-2 border-[var(--brand-accent)] bg-transparent text-white hover:border-white hover:text-[var(--brand-accent)]",
+  // orange-outline pill on a light surface — the theme's default button (uk-button-default).
+  // Orange uppercase bold text, transforms to purple border + text on hover. (Latest News "Read more".)
+  ghost:
+    "px-[30px] rounded-full font-bold uppercase tracking-[1.5px] border-2 border-[var(--brand-accent)] bg-transparent text-[var(--brand-accent)] hover:border-[var(--brand-primary)] hover:text-[var(--brand-primary)]",
 };
 
 type CtaProps = {
   cta: CtaEntry | null | undefined;
   className?: string;
+  /**
+   * When provided, the CTA renders as a `<button>` that fires this handler
+   * instead of navigating — used for modal triggers (e.g. NewsletterSignup).
+   */
+  onClick?: () => void;
+  /**
+   * Force the heart icon on non-`donate` variants (e.g. the ghost Donate
+   * button on the DonationCTA purple tile, which reuses `ghost-accent`).
+   */
+  showHeart?: boolean;
 };
 
-export function Cta({ cta, className = "" }: CtaProps) {
+export function Cta({ cta, className = "", onClick, showHeart = false }: CtaProps) {
   if (!cta || !cta.label) return null;
 
   const classes = `${BASE} ${VARIANT[cta.variant]} ${className}`.trim();
   const children: ReactNode = (
     <>
-      {cta.variant === "donate" && <Heart />}
+      {(cta.variant === "donate" || showHeart) && <Heart />}
       {cta.label}
     </>
   );
+
+  if (onClick) {
+    return (
+      <button
+        type="button"
+        onClick={onClick}
+        className={classes}
+        aria-label={cta.ariaLabel ?? undefined}
+        aria-haspopup="dialog"
+      >
+        {children}
+      </button>
+    );
+  }
 
   const href = cta.href ?? "#";
   const isExternal = /^https?:\/\//.test(href) || cta.target === "_blank";
