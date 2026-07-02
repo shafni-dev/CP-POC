@@ -18,7 +18,7 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Contentful Next.js Starter",
+  title: "Carers Worldwide | Committed to Changing the Lives of Carers",
   description: "Next.js + Contentful starter project",
 };
 
