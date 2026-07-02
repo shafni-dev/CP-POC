@@ -1,0 +1,119 @@
+import type { Document } from "@contentful/rich-text-types";
+
+export type ImageAsset = {
+  url: string | null;
+  width?: number | null;
+  height?: number | null;
+};
+
+export type RichTextContent = {
+  json: Document;
+} | null;
+
+/* ---- Shared reusable reference entries (linked from sections) ---- */
+
+export type ImageEntry = {
+  id: string;
+  url: string | null;
+  alt: string | null;
+  width: number | null;
+  height: number | null;
+  contentType: string | null;
+  loading: "eager" | "lazy";
+};
+
+export type CtaVariant = "default" | "primary" | "donate";
+
+export type CtaEntry = {
+  id: string;
+  label: string;
+  href: string | null;
+  variant: CtaVariant;
+  ariaLabel: string | null;
+  target: "_self" | "_blank";
+};
+
+export type VideoEntry = {
+  id: string;
+  youtubeId: string | null;
+  videoTitle: string | null;
+  caption: string | null;
+};
+
+export type CardVariant = "media-top" | "media-left" | "linked" | "blog";
+
+export type CardEntry = {
+  id: string;
+  frontEndComponent: CardVariant;
+  image: ImageEntry | null;
+  eyebrow: string | null;
+  title: string | null;
+  titleHref: string | null;
+  body: RichTextContent;
+  meta: string | null;
+  cta: CtaEntry | null;
+};
+
+export type SeoEntry = {
+  sys: { id: string };
+  seoTitle?: string | null;
+  seoDescription?: string | null;
+  seoOgImage?: ImageAsset | null;
+  seoNoIndex?: boolean | null;
+  seoNoFollow?: boolean | null;
+  seoCanonicalUrl?: string | null;
+  seoSchemaMarkup?: unknown | null;
+};
+
+/**
+ * Every concrete section extends BaseSection and sets a unique `type` literal.
+ * Add your section types to the `Section` union below as you build them out.
+ * See `components/ARCHITECTURE.md` for the full pattern.
+ */
+export type BaseSection = {
+  id: string;
+  type: string;
+};
+
+export type UnknownSection = BaseSection & {
+  type: "unknown";
+  raw: unknown;
+};
+
+export type NavLink = {
+  id: string;
+  label: string;
+  href: string | null;
+  children: NavLink[];
+};
+
+export type SocialPlatform =
+  | "facebook"
+  | "twitter"
+  | "linkedin"
+  | "instagram"
+  | "youtube";
+
+/**
+ * A single social link. Shared by the shared `socialLinks` Contentful entry,
+ * consumed by both the Navigation (mobile menu) and Footer sections.
+ * Structurally matches the `SocialLink` prop type of the SocialLinks component.
+ */
+export type SocialLinkEntry = {
+  platform: SocialPlatform;
+  href: string;
+};
+
+export type NavigationSection = BaseSection & {
+  type: "navigation";
+  frontEndComponent: string | null;
+  logo: (ImageAsset & { title?: string | null }) | null;
+  logoWidth: number | null;
+  logoHeight: number | null;
+  donateLabel: string | null;
+  donateHref: string | null;
+  items: NavLink[];
+  socialLinks: SocialLinkEntry[];
+};
+
+export type Section = UnknownSection | NavigationSection;

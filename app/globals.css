@@ -1,26 +1,64 @@
 @import "tailwindcss";
 
+/*
+ * Brand tokens. Reference these from components via
+ * `bg-[var(--brand-primary)]`, `text-[var(--text-default)]`, etc.
+ */
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #141414;
+
+  --brand-primary: #92278f;
+  --brand-primary-hover: #7a1f78;
+  --brand-accent: #f7941d;
+  --text-default: #333333;
+  --text-muted: #6a6a6a;
+  --bg-muted: #f5f5f5;
+
+  /* Navigation */
+  --nav-link: #333333;
+  --nav-link-muted: #999999;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-sans: var(--font-roboto);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-roboto), Arial, Helvetica, sans-serif;
 }
+
+/*
+ * Global page container. Every full-width section places its content inside
+ * `.site-container` so horizontal gutters stay consistent site-wide.
+ *
+ * Matches the source site's "xlarge" container exactly: a 1600px content cap
+ * plus 40px side padding (border-box → 1680px total), centered with auto
+ * margins. This reproduces the live logo/donate offsets at every viewport
+ * (e.g. 40px in at 1440, 160px in at 1920). Padding steps down on smaller
+ * screens like the source.
+ */
+.site-container {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 1680px;
+  margin-inline: auto;
+  padding-inline: 16px;
+}
+
+@media (min-width: 640px) {
+  .site-container {
+    padding-inline: 30px;
+  }
+}
+
+@media (min-width: 960px) {
+  .site-container {
+    padding-inline: 40px;
+  }
+}
+

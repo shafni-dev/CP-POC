@@ -1,6 +1,6 @@
 ---
 name: e25-build-component
-description: Build a Figma design as a CMS-backed section/component on an E25 Next.js base — works on BOTH the Contentstack and Contentful scaffolds. Detects the base, models the content type/variant, wires the GraphQL query + transform + React component per the section-registry "switch-case" architecture, creates and publishes a sample entry, then visually verifies pixel-perfect against the Figma node in headless Chrome. Invoked when the user types `/e25-build-component`, or asks to "build this component / section from Figma", "implement this Figma design", "add a <Cards/Banner/Hero/...> variant / frontend component", or "build this using the <content type> content type" on a Contentstack or Contentful project, usually with a figma.com node link.
+description: Build a section/component as a CMS-backed entry on an E25 Next.js base — works on BOTH the Contentstack and Contentful scaffolds. Accepts either a Figma node URL or a live website URL (for website recreation POCs). Detects the base, models the content type/variant, wires the GraphQL query + transform + React component per the section-registry "switch-case" architecture, creates and publishes a sample entry, then visually verifies pixel-perfect against the reference (Figma node or live-site screenshot) in headless Chrome. Invoked when the user types `/e25-build-component`, or asks to "build this component / section from Figma", "implement this Figma design", "add a <Cards/Banner/Hero/...> variant / frontend component", "build this using the <content type> content type", or "recreate this section from <URL>".
 ---
 
 # e25-build-component
@@ -25,8 +25,20 @@ two reference files.
 
 ## Inputs you need
 
+Accept **one of two reference modes** — do not require both:
+
+**Mode A — Figma (original):**
 - A **Figma node URL** (`figma.com/design/:fileKey/...?node-id=:a-:b`). Extract `fileKey` and
   `nodeId` (convert `a-b` → `a:b`). If no `node-id`, ask for a node-specific link.
+
+**Mode B — Live website URL (website recreation POC):**
+- A **live website URL** (e.g. `https://example.com`) plus a section description or CSS selector
+  identifying which part of the page to recreate.
+- Pre-captured design details (colors, fonts, layout, content) passed directly in the prompt
+  are preferred to avoid redundant re-inspection. If not provided, use the browser to visit the
+  URL and extract them (see Step 2B).
+
+**Both modes also require:**
 - The **content type** and/or **frontend-component (variant) name**, if the user gave them
   (e.g. "content type: Cards, frontend component: Four feature cards"). If they didn't name
   the variant, you pick one (Step 3). If they say "make pp 100%", treat pixel-perfection +
@@ -59,17 +71,31 @@ Never guess the pattern — read it:
 - If extending an existing content type, fetch its current schema from the CMS (see cookbook)
   so you use exact field ids and existing variant choices.
 
-## Step 2 — Read the Figma design
+## Step 2 — Read the reference design
 
+Branch on the input mode detected in "Inputs you need":
+
+### Step 2A — Figma mode
 - `get_design_context(nodeId, fileKey)` — the structure + reference code (MANDATORY before
   building). `get_screenshot(nodeId, fileKey, maxDimension: 1600)` — download the PNG as the
   visual reference and **note the node's exact width × height** (your build's clipped section
   should match it).
-- Decide: **new content type** or **new variant of an existing one**? (The user usually says.)
 - Extract, precisely: text content, font family + **weight** (Poppins Light=300, Regular=400,
   Medium=500, SemiBold=600), sizes/line-heights, colors (→ map to CSS tokens in
   `app/globals.css`, never raw hex), paddings/gaps, card/column **pixel widths**, border radii,
   and any **interactions** (accordion, slider, toggle, hover).
+
+### Step 2B — Live website URL mode
+- If the user already supplied pre-captured design details in their prompt, use those directly
+  as the reference — **skip the browser visit**.
+- If design details are missing or incomplete, open the live URL in a headless browser:
+  1. Take a full-page screenshot as the **visual reference** (save to `/tmp/ref-<section>.png`).
+  2. Extract computed CSS for the target section: fonts, colors, padding, gap, widths, border-radii.
+  3. Download any public image/SVG assets needed for the sample entry.
+- Map all extracted colors to CSS token variables in `app/globals.css` (never raw hex).
+- Note any interactions (auto-play slider, accordion, hover scale, off-canvas menu).
+
+**Both modes:** Decide — **new content type** or **new variant of an existing one**? (The user usually says.)
 
 ## Step 3 — Plan the content model
 

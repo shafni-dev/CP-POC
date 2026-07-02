@@ -9,6 +9,8 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@contentful/rich-text-react-renderer": "^16.2.1",
+    "@contentful/rich-text-types": "^17.2.7",
     "next": "16.2.9",
     "react": "19.2.4",
     "react-dom": "19.2.4"
