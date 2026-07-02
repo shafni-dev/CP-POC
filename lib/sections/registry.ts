@@ -9,6 +9,7 @@ import { spendingAndVideoDefinition } from "./definitions/spendingAndVideo";
 import { newsletterSignupDefinition } from "./definitions/newsletterSignup";
 import { latestNewsDefinition } from "./definitions/latestNews";
 import { impactStatsDefinition } from "./definitions/impactStats";
+import { footerDefinition } from "./definitions/footer";
 
 /**
  * Central section registry. Empty by default.
@@ -32,4 +33,5 @@ export const sectionRegistry: SectionDefinition[] = [
   newsletterSignupDefinition,
   latestNewsDefinition,
   impactStatsDefinition,
+  footerDefinition,
 ];
